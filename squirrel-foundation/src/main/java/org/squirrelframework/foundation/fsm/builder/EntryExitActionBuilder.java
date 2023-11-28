@@ -12,5 +12,7 @@ import org.squirrelframework.foundation.fsm.StateMachine;
  * @param <E> type of Event
  * @param <C> type of Context
  */
-public interface EntryExitActionBuilder<T extends StateMachine<T, S, E, C>, S, E, C> extends When<T, S, E, C> {
+public interface EntryExitActionBuilder<T extends StateMachine<T, S, E, C>, S, E, C> extends When<T, S, E, C>
+{
+
 }

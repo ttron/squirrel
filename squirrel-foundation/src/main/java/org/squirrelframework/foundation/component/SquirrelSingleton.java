@@ -7,5 +7,7 @@ package org.squirrelframework.foundation.component;
  * @author Henry.He
  *
  */
-public interface SquirrelSingleton {
+public interface SquirrelSingleton
+{
+
 }

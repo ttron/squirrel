@@ -12,5 +12,6 @@ import org.squirrelframework.foundation.fsm.StateMachine;
  * @param <E> type of Event
  * @param <C> type of Context
  */
-public interface LocalTransitionBuilder<T extends StateMachine<T, S, E, C>, S, E, C> extends ExternalTransitionBuilder<T, S, E, C> {
+public interface LocalTransitionBuilder<T extends StateMachine<T, S, E, C>, S, E, C> extends ExternalTransitionBuilder<T, S, E, C>
+{
 }

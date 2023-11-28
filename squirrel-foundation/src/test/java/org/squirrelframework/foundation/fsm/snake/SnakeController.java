@@ -12,7 +12,6 @@ import org.squirrelframework.foundation.fsm.snake.SnakeController.SnakeState;
 
 import java.awt.*;
 import java.util.Random;
-
 /**
  * This is an example on how to use state machine to build a game controller. The state machine was defined in declarative manner.
  * 

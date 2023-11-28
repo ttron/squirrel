@@ -9,8 +9,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
-@Target({TYPE, METHOD})
+@Target({ TYPE, METHOD })
 @Documented
-public @interface AsyncExecute {
-    long timeout() default -1;
+public @interface AsyncExecute
+{
+	long timeout() default -1;
 }

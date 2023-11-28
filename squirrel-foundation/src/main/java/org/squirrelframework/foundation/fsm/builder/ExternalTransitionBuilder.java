@@ -12,11 +12,13 @@ import org.squirrelframework.foundation.fsm.StateMachine;
  * @param <E> type of Event
  * @param <C> type of Context
  */
-public interface ExternalTransitionBuilder<T extends StateMachine<T, S, E, C>, S, E, C> {
-    /**
-     * Build transition source state.
-     * @param stateId id of state
-     * @return from clause builder
-     */
-    From<T, S, E, C> from(S stateId);
+public interface ExternalTransitionBuilder<T extends StateMachine<T, S, E, C>, S, E, C>
+{
+	/**
+	 * Build transition source state.
+	 * @param stateId id of state
+	 * @return from clause builder
+	 */
+	From<T, S, E, C> from(S stateId);
+
 }

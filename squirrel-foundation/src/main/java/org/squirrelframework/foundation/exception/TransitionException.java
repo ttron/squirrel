@@ -7,11 +7,12 @@ package org.squirrelframework.foundation.exception;
  * @author Henry.He
  *
  */
-public class TransitionException extends SquirrelRuntimeException {
+public class TransitionException extends SquirrelRuntimeException
+{
+	private static final long serialVersionUID = -3907699293556397027L;
 
-    private static final long serialVersionUID = -3907699293556397027L;
-    
-    public TransitionException(Throwable targetException, ErrorCodes errorCode, Object[] parameters) {
-        super(targetException, errorCode, parameters);
-    }
+	public TransitionException(Throwable targetException, ErrorCodes errorCode, Object[] parameters)
+	{
+		super( targetException, errorCode, parameters );
+	}
 }

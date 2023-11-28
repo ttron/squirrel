@@ -1,88 +1,120 @@
 package org.squirrelframework.foundation.fsm;
 
-import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.squirrelframework.foundation.exception.TransitionException;
-import org.squirrelframework.foundation.fsm.annotation.*;
+import org.squirrelframework.foundation.fsm.annotation.OnActionExecException;
+import org.squirrelframework.foundation.fsm.annotation.OnAfterActionExecuted;
+import org.squirrelframework.foundation.fsm.annotation.OnBeforeActionExecuted;
+import org.squirrelframework.foundation.fsm.annotation.OnStateMachineStart;
+import org.squirrelframework.foundation.fsm.annotation.OnStateMachineTerminate;
+import org.squirrelframework.foundation.fsm.annotation.OnTransitionBegin;
+import org.squirrelframework.foundation.fsm.annotation.OnTransitionComplete;
+import org.squirrelframework.foundation.fsm.annotation.OnTransitionDecline;
+import org.squirrelframework.foundation.fsm.annotation.OnTransitionException;
 
-public class StateMachineLogger {
-    
-    private static final Logger logger = LoggerFactory.getLogger(StateMachineLogger.class);
+import com.google.common.base.Stopwatch;
 
-    private Stopwatch transitionWatch;
+public class StateMachineLogger
+{
+	private static final Logger logger = LoggerFactory.getLogger( StateMachineLogger.class );
 
-    private Stopwatch actionWatch;
+	private Stopwatch transitionWatch;
 
-    private final StateMachine<?,?,?,?> stateMachine;
+	private Stopwatch actionWatch;
 
-    private final String stateMachineLabel;
+	private final StateMachine<?, ?, ?, ?> stateMachine;
 
-    public StateMachineLogger(StateMachine<?,?,?,?> stateMachine) {
-        this.stateMachine = stateMachine;
-        this.stateMachineLabel = stateMachine.getClass().getSimpleName()
-                +"("+stateMachine.getIdentifier()+")";
-    }
+	private final String stateMachineLabel;
 
-    public void startLogging() {
-        stateMachine.addDeclarativeListener(this);
-    }
+	public StateMachineLogger(StateMachine<?, ?, ?, ?> stateMachine)
+	{
+		this.stateMachine = stateMachine;
+		this.stateMachineLabel = stateMachine.getClass().getSimpleName() + "(" + stateMachine.getIdentifier() + ")";
+	}
 
-    public void stopLogging() {
-        stateMachine.removeDeclarativeListener(this);
-    }
 
-    @OnStateMachineStart
-    public void onStateMachineStart() {
-        logger.info(stateMachineLabel + ": Started.");
-    }
+	public void startLogging()
+	{
+		stateMachine.addDeclarativeListener( this );
+	}
 
-    @OnStateMachineTerminate
-    public void onStateMachineTerminate() {
-        logger.info(stateMachineLabel + ": Terminated.");
-    }
 
-    @OnTransitionBegin
-    public void onTransitionBegin(Object sourceState, Object event, Object context) {
-        transitionWatch = Stopwatch.createStarted();
-        logger.info(stateMachineLabel + ": Transition from \"" + sourceState + 
-                "\" on \"" + event + "\" with context \""+context+"\" begin.");
-    }
-    
-    @OnTransitionComplete
-    public void onTransitionComplete(Object sourceState, Object targetState, Object event, Object context) {
-        logger.info(stateMachineLabel + ": Transition from \"" + sourceState + 
-                "\" to \"" + targetState + "\" on \"" + event
-                + "\" complete which took " + transitionWatch + ".");
-    }
-    
-    @OnTransitionDecline
-    public void onTransitionDeclined(Object sourceState, Object event) {
-        logger.warn(stateMachineLabel + ": Transition from \"" + sourceState + "\" on \"" + event+ "\" declined.");
-    }
-    
-    @OnTransitionException
-    public void onTransitionException(Object sourceState, Object targetState, Object event, Object context, TransitionException e) {
-        Throwable expcetion = e.getTargetException(); 
-        logger.error(stateMachineLabel + ": Transition from \"" + sourceState + 
-                "\" to \"" + targetState + "\" on \"" + event + "\" caused exception.", expcetion);
-    }
-    
-    @OnBeforeActionExecuted
-    public void onBeforeActionExecuted(Object sourceState, Object targetState, 
-            Object event, Object context, int[] mOfN, Action<?, ?, ?,?> action) {
-        actionWatch = Stopwatch.createStarted();
-        logger.info("Before execute method call action \""+action.name()+":"+action.weight()+"\" ("+ mOfN[0] + " of "+mOfN[1]+").");
-    }
-    
-    @OnAfterActionExecuted
-    public void onAfterActionExecuted(Object sourceState, Object targetState, 
-            Object event, Object context, int[] mOfN, Action<?, ?, ?,?> action) {
-        logger.info("After execute method call action \""+action.name()+":"+action.weight()+"\" which took "+actionWatch+".");
-    }
-    
-    @OnActionExecException
-    public void onActionExecException(Action<?, ?, ?,?> action, TransitionException e) {
-        logger.error("Error executing method call action \""+action.name()+"\" caused by \""+e.getMessage()+"\"");
-    }
+	public void stopLogging()
+	{
+		stateMachine.removeDeclarativeListener( this );
+	}
+
+
+	@OnStateMachineStart
+	public void onStateMachineStart()
+	{
+		logger.info( stateMachineLabel + ": Started." );
+	}
+
+
+	@OnStateMachineTerminate
+	public void onStateMachineTerminate()
+	{
+		logger.info( stateMachineLabel + ": Terminated." );
+	}
+
+
+	@OnTransitionBegin
+	public void onTransitionBegin(Object sourceState, Object event, Object context)
+	{
+		transitionWatch = Stopwatch.createStarted();
+		logger.info( stateMachineLabel + ": Transition from \"" + sourceState + "\" on \"" + event + "\" with context \""
+				+ context + "\" begin." );
+	}
+
+
+	@OnTransitionComplete
+	public void onTransitionComplete(Object sourceState, Object targetState, Object event, Object context)
+	{
+		logger.info( stateMachineLabel + ": Transition from \"" + sourceState + "\" to \"" + targetState + "\" on \"" + event
+				+ "\" complete which took " + transitionWatch + "." );
+	}
+
+
+	@OnTransitionDecline
+	public void onTransitionDeclined(Object sourceState, Object event)
+	{
+		logger.warn( stateMachineLabel + ": Transition from \"" + sourceState + "\" on \"" + event + "\" declined." );
+	}
+
+
+	@OnTransitionException
+	public void onTransitionException(Object sourceState, Object targetState, Object event, Object context, TransitionException e)
+	{
+		Throwable expcetion = e.getTargetException();
+		logger.error( stateMachineLabel + ": Transition from \"" + sourceState + "\" to \"" + targetState + "\" on \"" + event
+				+ "\" caused exception.", expcetion );
+	}
+
+
+	@OnBeforeActionExecuted
+	public void onBeforeActionExecuted(Object sourceState, Object targetState, Object event, Object context, int[] mOfN,
+			Action<?, ?, ?, ?> action)
+	{
+		actionWatch = Stopwatch.createStarted();
+		logger.info( "Before execute method call action \"" + action.name() + ":" + action.weight() + "\" (" + mOfN[0] + " of "
+				+ mOfN[1] + ")." );
+	}
+
+
+	@OnAfterActionExecuted
+	public void onAfterActionExecuted(Object sourceState, Object targetState, Object event, Object context, int[] mOfN,
+			Action<?, ?, ?, ?> action)
+	{
+		logger.info( "After execute method call action \"" + action.name() + ":" + action.weight() + "\" which took "
+				+ actionWatch + "." );
+	}
+
+
+	@OnActionExecException
+	public void onActionExecException(Action<?, ?, ?, ?> action, TransitionException e)
+	{
+		logger.error( "Error executing method call action \"" + action.name() + "\" caused by \"" + e.getMessage() + "\"" );
+	}
 }

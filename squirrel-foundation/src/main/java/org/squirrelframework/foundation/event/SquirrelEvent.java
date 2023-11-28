@@ -1,4 +1,6 @@
 package org.squirrelframework.foundation.event;
 
-public interface SquirrelEvent {
+public interface SquirrelEvent
+{
+
 }
