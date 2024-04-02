@@ -44,7 +44,7 @@
 		<snapshotRepository>
 			<id>tsst-snapshots</id>
 			<name>Tsst Snapshots Repository</name>
-			<url>http://maven.tsst.cc/nexus/content/repositories/snapshots/</url>
+			<url>http://maven.tsst.cc/nexus/content/repositories/tsst-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<pluginRepositories>
